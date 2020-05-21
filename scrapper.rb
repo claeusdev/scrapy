@@ -4,16 +4,21 @@ require "byebug"
 
 
 def scrapper
-  url = "https://www.indeed.com/jobs?q=junior&l="
+  url = "https://www.indeed.com/jobs?q=junior+developer&l="
   unparsed_page = HTTParty.get(url)
   parsed_page = Nokogiri::HTML(unparsed_page)
   all_jobs = []
   jobs = parsed_page.css("div.result")
 
   page = 0
-  per_page = all_jobs.count
+  per_page = jobs.count
   total = parsed_page.css("div#searchCountPages").text.split(" ")[3].gsub(",", "").to_i
-  while page <= total
+
+  last_page = (total.to_f/per_page.to_f).round
+  p total
+  p per_page
+  p "Last page"
+  while page <= last_page
     pagination_url = "https://www.indeed.com/jobs?q=junior&start=#{page}"
    paginated_unparsed_page = HTTParty.get(pagination_url)
   paginated_parsed_page = Nokogiri::HTML(paginated_unparsed_page)
