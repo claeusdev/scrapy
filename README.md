@@ -1,2 +1,2 @@
 # scrapy
-Simple indeed junior job scrapper
+Simply search indeed.com for junior software developer jobs
